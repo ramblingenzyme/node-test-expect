@@ -1,0 +1,17 @@
+{
+  "name": "node-test-expect",
+  "description": "Node test runner wrapper aimed at Jest users",
+  "version": "0.0.1",
+  "type": "module",
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
+  "exports": {
+    ".": "./dist/index.js",
+    "./node18": "./dist/node18.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.10",
+    "expect": "^29.7.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  }
+}
