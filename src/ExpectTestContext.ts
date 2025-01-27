@@ -48,7 +48,14 @@ export default class ExpectTestContext {
 
     for (const prop of PASSTHROUGH_PROPS) {
       Object.defineProperty(this, prop, {
-        get: () => this.#baseContext[prop],
+        get: () => {
+          const value = this.#baseContext[prop];
+          if (typeof value === "function") {
+            return value.bind(this.#baseContext);
+          } else {
+            return value;
+          }
+        },
       });
     }
   }

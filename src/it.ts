@@ -7,7 +7,7 @@ type BaseTestFn = (t: TestContext, done?: DoneCallback) => void | Promise<void>;
 
 export type TestFn = (
   t: ExpectTestContext,
-  done?: DoneCallback,
+  done: DoneCallback,
 ) => void | Promise<void>;
 
 export type TestOptions = {
