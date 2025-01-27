@@ -107,6 +107,18 @@ const getTestFn = (fn?: TestFn) => {
   }
 };
 
+class ParentError extends Error {
+  /**
+   * @param message Error message
+   * @param fromFn A function to exclude from the stack trace. Should be the function creating the ParentError.
+   */
+  constructor(message: string, fromFn: Function) {
+    super(message);
+
+    Error.captureStackTrace(this, fromFn);
+  }
+}
+
 function it(name?: string, options?: TestOptions, fn?: TestFn): Promise<void>;
 // @ts-expect-error TODO: Futzing with the implementation args until all overloads are happy
 function it(name?: string, fn?: TestFn): Promise<void>;
@@ -119,6 +131,13 @@ function it(
     TestFn | undefined,
   ]
 ) {
+  if (TEST_CONTEXT_ALS.getStore()) {
+    throw new ParentError(
+      "Nested tests aren't allowed. Use `describe` for nesting.",
+      it,
+    );
+  }
+
   const [name, options, fn] = resolveArgs(...args);
   return baseIt(name, options, getTestFn(fn));
 }
