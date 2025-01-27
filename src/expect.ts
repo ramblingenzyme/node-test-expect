@@ -24,13 +24,16 @@ const toJestCompatibleMock = (mockFn: Mock<Function>): any => {
 
   return {
     _isMockFunction: true,
-    calls: calls.map((c) => c.arguments),
-    results: calls.map((c) => ({
-      type: c.error ? "throw" : "return",
-      value: c.error || c.result,
-    })),
-    contexts: calls.map((c) => c.this),
-    lastCall: calls.at(-1),
+    getMockName: () => "spy",
+    mock: {
+      calls: calls.map((c) => c.arguments),
+      results: calls.map((c) => ({
+        type: c.error ? "throw" : "return",
+        value: c.error || c.result,
+      })),
+      contexts: calls.map((c) => c.this),
+      lastCall: calls.at(-1),
+    },
   };
 };
 
@@ -60,7 +63,7 @@ expect.extend({
     } catch (e: any) {
       return {
         pass: false,
-        message: e?.message || e,
+        message: () => e?.message || e,
       };
     }
   },
@@ -79,7 +82,7 @@ const expectProxy = new Proxy(expect, {
 export default expectProxy;
 
 declare module "expect" {
-  interface CompatMatchers<R extends void | Promise<void>> extends Matchers<R> {
+  interface Matchers<R extends void | Promise<void>> {
     toMatchSnapshot(options?: AssertSnapshotOptions): R;
   }
 }

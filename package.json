@@ -8,6 +8,9 @@
     ".": "./dist/index.js",
     "./node18": "./dist/node18.js"
   },
+  "scripts": {
+    "test": "node --experimental-strip-types --test 'test/**/*.test.ts'"
+  },
   "devDependencies": {
     "@types/node": "^22.10.10",
     "expect": "^29.7.0",

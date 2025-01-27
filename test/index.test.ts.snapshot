@@ -1,0 +1,5 @@
+exports[`test suite > should do snapshot testing 1`] = `
+{
+  "a": "test"
+}
+`;
